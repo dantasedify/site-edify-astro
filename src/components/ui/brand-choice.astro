@@ -1,21 +1,19 @@
 ---
 import BrandsSliderOne from "../functional/BrandsSliderOne";
 const { title, data } = Astro.props;
-const { brandsSlider1, brandsSlider2 } = data;
+const { brandsSlider1 } = data;
 ---
 
-<div class="section tw-bg-[#F9F9F9] zubuz-section-padding4">
+<div class="section zubuz-section-padding4 bg-light">
   <div class="container">
-    <div class="row">
+    <div class="row align-items-center">
       <div class="col-lg-5">
-        <div class="zubuz-brand-logo-content">
+        <div class="zubuz-brand-logo-content text-dark">
           <h2>{title}</h2>
         </div>
       </div>
       <div class="col-lg-7">
         <BrandsSliderOne client:only rtl={true} data={brandsSlider1} />
-        <div class="mt-2"></div>
-        <BrandsSliderOne client:only rtl={false} data={brandsSlider2} />
       </div>
     </div>
   </div>

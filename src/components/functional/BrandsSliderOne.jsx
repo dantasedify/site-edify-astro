@@ -34,7 +34,9 @@ const BrandsSliderOne = ({ data, rtl }) => {
       <Slider {...settings}>
         {data?.map((item, index) => (
           <div key={index} className="zubuz-brand-item">
-            <img src={item} alt="slider image" />
+            <div className="zubuz-brand-item-wrapper">
+              <img src={item} alt="slider image" />
+            </div>
           </div>
         ))}
       </Slider>
