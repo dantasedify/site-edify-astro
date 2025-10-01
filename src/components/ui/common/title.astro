@@ -6,13 +6,14 @@ const { title, text, btn, customClass } = Astro.props;
   <div class="row">
     <div class="col-lg-7">
       <h2 class={customClass}>{title}</h2>
+      <p class="mt-4">{text}</p>
     </div>
     <div class="col-lg-5 d-flex align-items-center">
       {
         btn ? (
           <div class="zubuz-title-btn">
             <a class="zubuz-default-btn pill" href="/integration">
-              <span>{btn}</span>
+              <span set:html={btn}></span>
             </a>
           </div>
         ) : (

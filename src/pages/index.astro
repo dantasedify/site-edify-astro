@@ -6,20 +6,38 @@ import HeroSection from "../components/custom/HeroSection.astro";
 import { getEntryBySlug, getCollection } from "astro:content";
 import BrandChoice from "../components/ui/brand-choice.astro";
 import ExtendedFeature from "../components/ui/ExtendedFeature.astro";
+import Title from "../components/ui/common/title.astro";
+import Service from "../components/ui/service.astro";
 
 const hero = (await getEntryBySlug("hero", "index")) as any;
 const title = hero?.data?.title;
 const brands = (await getEntryBySlug("brands", "index")) as any;
 const titles = (await getEntryBySlug("sectionTitlesTwo", "index")) as any;
 const extendedFeatures = await getCollection("extendedFeatures");
+const servicesCollection = await getCollection("services");
 ---
 
 <Layout title="Edify - Seus alunos falando inglês de verdade.">
+
   <HeroSection data={hero?.data} title={title} />
+  
   <BrandChoice title={titles?.data?.brands?.title} data={brands?.data} />
+  
   <ExtendedFeature
     title={titles?.data?.extendedFeature?.title}
     data={extendedFeatures}
   />
+  
+  <div class="section zubuz-section-padding1">
+    <div class="container">
+      <Title
+        title={" Soluções ideais para elevar o inglês"}
+        text={"O Edify oferece planos inovadores que atendem às necessidades de cada escola."}
+        btn={"Marque uma conversa e <br/> conheça mais sobre o Edify"}
+      />
+      <Service page={"services"} services={servicesCollection} />
+    </div>
+  </div>
+
 </Layout>
 

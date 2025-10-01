@@ -2,7 +2,7 @@
 const { page, services } = Astro.props;
 ---
 
-<div class="row">
+<div class="row" data-equalize="service-cards">
   {
     services
       .slice(0, page === "services" ? services.length : 6)
@@ -14,7 +14,7 @@ const { page, services } = Astro.props;
                 <div class="zubuz-iconbox-icon none-bg">
                   <img src={`${service?.data?.image}`} alt="" />
                 </div>
-                <div class="zubuz-iconbox-data data-small">
+                <div class="zubuz-iconbox-data data-small mt-3">
                   <span>{service?.data?.service}</span>
                   <p>{service?.data?.subtitle}</p>
                   <a
@@ -22,7 +22,7 @@ const { page, services } = Astro.props;
                     aria-label="read more"
                     href={`/service/${service?.slug}`}
                   >
-                    <span>Read more</span>
+                    <span>Saiba mais</span>
                     <img src="assets/images/icon/arrow-right2.svg" alt="" />
                   </a>
                 </div>
@@ -33,3 +33,36 @@ const { page, services } = Astro.props;
       })
   }
 </div>
+
+<script>
+  // @ts-nocheck
+  (function () {
+    function equalizeGroupHeight(group) {
+      const cards = group.querySelectorAll('.zubuz-iconbox-wrap-left.iconbox-left-border');
+      if (!cards.length) return;
+      let maxHeight = 0;
+
+      cards.forEach((card) => {
+        card.style.minHeight = '';
+      });
+
+      cards.forEach((card) => {
+        const height = card.offsetHeight;
+        if (height > maxHeight) maxHeight = height;
+      });
+
+      cards.forEach((card) => {
+        card.style.minHeight = maxHeight + 'px';
+      });
+    }
+
+    function runEqualize() {
+      const groups = document.querySelectorAll('[data-equalize="service-cards"]');
+      groups.forEach((group) => equalizeGroupHeight(group));
+    }
+
+    window.addEventListener('DOMContentLoaded', runEqualize);
+    window.addEventListener('load', runEqualize);
+    window.addEventListener('resize', runEqualize);
+  })();
+  </script>

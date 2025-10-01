@@ -23,7 +23,7 @@
   --gray-color: #171212;
   --light-color: #e6e6e6;
   --dark-bg: #000000;
-  --blue-bg: #0000ff;
+  --blue-bg: #4219b5;
   --light-bg: #F9F9F9;
   --white-bg: #fff;
 }
@@ -3769,7 +3769,17 @@ span.zubuz-title-shape {
 .zubuz-iconbox-wrap-left .zubuz-iconbox-icon {
   margin-right: 24px;
 }
+.zubuz-iconbox-wrap-left .zubuz-iconbox-data {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.zubuz-iconbox-wrap-left .zubuz-iconbox-btn {
+  margin-top: auto;
+}
 .zubuz-iconbox-wrap-left.iconbox-left-border {
+  display: flex;
+  flex-direction: column;
   padding: 28px;
   border-radius: 20px;
   border: 1px solid #ccc;
