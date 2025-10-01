@@ -18,7 +18,7 @@
   --heading-color: #242426;
   --body-color: #0c0c0c;
   --primary-color: #4219b5;
-  --secondary-color: #FFC20E;
+  --secondary-color: #00AA9E;
   --white-color: #ffffff;
   --gray-color: #171212;
   --light-color: #e6e6e6;
@@ -2658,7 +2658,7 @@ button#comment-btn {
 #comment-btn:hover,
 #zubuz-submit-btn:hover,
 #zubuz-account-btn:hover {
-  color: var(--heading-color);
+  color: var(--white-color);
   background-color: var(--secondary-color);
 }
 .zubuz-default-btn span,
