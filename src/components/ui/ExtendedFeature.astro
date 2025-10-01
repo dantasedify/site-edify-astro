@@ -6,26 +6,7 @@ const { title, data } = Astro.props;
 <div class="scetion zubuz-section-padding2">
   <div class="container">
     <div class="row">
-      <div class="col-lg-7 order-lg-2">
-        <div class="zubuz-default-content">
-          <h2>{title}</h2>
-          <p>
-            Finance apps are for everyone, from beginners to experts. They help
-            manage money, track expenses, and make financial tasks easier.
-          </p>
-          <p>
-            Like budgeting and investment management. These apps are convenient
-            and offer financial insights to help people save and plan for the
-            future.
-          </p>
-          <div class="zubuz-extara-mt">
-            <a class="zubuz-default-btn" href="/contact">
-              <span>Start Your Free Trial</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-5">
+      <div class="col-lg-12">
         <ExtendedFeatureAccordion data={data} client:load />
       </div>
     </div>
