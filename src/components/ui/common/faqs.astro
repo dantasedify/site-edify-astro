@@ -1,0 +1,78 @@
+---
+import { getEntryBySlug } from "astro:content";
+const questions = await getEntryBySlug("faqs", "questions");
+const { title } = Astro.props;
+---
+
+<div class="section zubuz-section-padding2">
+  <div class="container">
+    <div class="zubuz-section-title center">
+      <h2>{title}</h2>
+    </div>
+    <div
+      class="zubuz-accordion-wrap zubuz-accordion-wrap2"
+      id="zubuz-accordion"
+    >
+      {
+        questions.data.questions.map((item: any, index) => {
+          return (
+            <>
+              <div class={`zubuz-accordion-item ${index === 0 ? "open" : ""}`}>
+                <div class="zubuz-accordion-header">
+                  <p>Q: {item.question}</p>
+                  <div class="zubuz-active-icon">
+                    <img src="assets/images/v3/plus.png" alt="" />
+                  </div>
+                  <div class="zubuz-inactive-icon">
+                    <img src="assets/images/v3/minus.png" alt="" />
+                  </div>
+                </div>
+                <div class="zubuz-accordion-body">
+                  <p> {item.answer}</p>
+                </div>
+              </div>
+            </>
+          );
+        })
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function Accordion(el, multiple) {
+      this.el = el || {};
+      this.multiple = multiple || false;
+
+      var links = this.el.querySelectorAll(".zubuz-accordion-header");
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", this.dropdown.bind(this));
+      }
+    }
+
+    Accordion.prototype.dropdown = function (e) {
+      var el = e.currentTarget.parentNode;
+      var isOpen = el.classList.contains("open");
+      var bodies = this.el.querySelectorAll(".zubuz-accordion-body");
+
+      if (!this.multiple) {
+        for (var i = 0; i < bodies.length; i++) {
+          if (bodies[i].parentNode !== el) {
+            bodies[i].style.display = "none";
+            bodies[i].parentNode.classList.remove("open");
+          }
+        }
+      }
+
+      el.classList.toggle("open");
+      var body = el.querySelector(".zubuz-accordion-body");
+      body.style.display = isOpen ? "none" : "block";
+    };
+
+    var accordion = new Accordion(
+      document.querySelector(".zubuz-accordion-wrap"),
+      false
+    );
+  });
+</script>

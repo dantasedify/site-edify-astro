@@ -1,0 +1,13 @@
+---
+import TestimonialSlider02 from "../functional/TestimonialSlider02";
+const { data } = Astro.props;
+---
+
+<div
+  class="zubuz-testimonial-slider-section zubuz-section-padding2"
+  style="background-image: url(assets/images/v2/t-bg.png)"
+>
+  <div class="container">
+    <TestimonialSlider02 data={data} client:only />
+  </div>
+</div>

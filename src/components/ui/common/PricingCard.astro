@@ -1,0 +1,39 @@
+---
+const { data } = Astro.props;
+---
+
+<div class="col-xl-3 col-md-6">
+  <div class="zubuz-pricing-wrap">
+    <div class="zubuz-pricing-header">
+      <p class=".h5" style="font-size: 20px;">{data?.title}</p>
+    </div>
+    <div class="zubuz-pricing-price">
+      <h2>$</h2>
+      <div
+        class="zubuz-price"
+        data-monthly={data?.priceMonthly}
+        data-yearly={data?.priceAnnually}
+      >
+        {data?.priceMonthly}
+      </div>
+      <p class="dynamic-value">/Monthly</p>
+    </div>
+    <div class="zubuz-pricing-description">
+      <p>{data?.desc}</p>
+    </div>
+    <div class="zubuz-pricing-body">
+      <p>{data?.title} plan includes:</p>
+      <ul>
+        {
+          data?.points?.map((item) => (
+            <li>
+              <img src="assets/images/v3/check.png" alt="" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <a class="zubuz-pricing-btn" href="/contact">Try it for free</a>
+  </div>
+</div>

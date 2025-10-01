@@ -1,0 +1,35 @@
+---
+const { page, services } = Astro.props;
+---
+
+<div class="row">
+  {
+    services
+      .slice(0, page === "services" ? services.length : 6)
+      .map((service: any) => {
+        return (
+          <>
+            <div class="col-xl-4 col-md-6">
+              <div class="zubuz-iconbox-wrap-left iconbox-left-border">
+                <div class="zubuz-iconbox-icon none-bg">
+                  <img src={`${service?.data?.image}`} alt="" />
+                </div>
+                <div class="zubuz-iconbox-data data-small">
+                  <span>{service?.data?.service}</span>
+                  <p>{service?.data?.subtitle}</p>
+                  <a
+                    class="zubuz-iconbox-btn"
+                    aria-label="read more"
+                    href={`/service/${service?.slug}`}
+                  >
+                    <span>Read more</span>
+                    <img src="assets/images/icon/arrow-right2.svg" alt="" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })
+  }
+</div>

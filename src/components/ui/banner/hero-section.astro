@@ -1,0 +1,46 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div
+  class="zubuz-hero-section"
+  style="background-image: url(assets/images/v1/hero-shape1.png)"
+>
+  <div class="container">
+    <div class="zubuz-hero-content center position-relative">
+      <h1>{title}</h1>
+      <p>
+        {data?.desc}
+      </p>
+      <div class="zubuz-hero-btn-wrap center">
+        <a class="zubuz-default-btn" href={data?.mainBtnLink}>
+          <span>{data?.mainBtnText}</span>
+        </a>
+        <a class="video-init zubuz-hero-video" href={data?.secondaryBtnLink}>
+          <img src="assets/images/v1/play-btn.png" alt="" />
+          {data?.secondaryBtnText}
+        </a>
+      </div>
+      <div class="zubuz-hero-shape">
+        <img src="assets/images/v1/shape.png" alt="" />
+      </div>
+    </div>
+    <div class="zubuz-hero-bottom">
+      <div class="zubuz-hero-thumb wow fadeInUpX">
+        <img src={data?.imgGrid[0]} alt="" />
+      </div>
+      <div class="zubuz-hero-card card1 wow zoomIn">
+        <img src={data?.imgGrid[1]} alt="" />
+      </div>
+      <div class="zubuz-hero-card card2 wow zoomIn">
+        <img src={data?.imgGrid[2]} alt="" />
+      </div>
+      <div class="zubuz-hero-card card3 wow zoomIn">
+        <img src={data?.imgGrid[3]} alt="" />
+      </div>
+      <div class="zubuz-hero-card card4 wow zoomIn">
+        <img src={data?.imgGrid[4]} alt="" />
+      </div>
+    </div>
+  </div>
+</div>

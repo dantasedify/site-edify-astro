@@ -1,0 +1,27 @@
+---
+const { title } = Astro.props;
+---
+
+<div class="zubuz-cta-section2">
+  <div class="container">
+    <div
+      class="zubuz-cta-wrap"
+      style="background-image: url(assets/images/v2/cta-bg.png)"
+    >
+      <div class="zubuz-cta-content">
+        <h2>{title}</h2>
+        <div class="zubuz-subscribe-two">
+          <form action="#">
+            <input type="email" placeholder="Enter your e-mail address" />
+            <button
+              class="zubuz-default-btn zubuz-subscription-btn two"
+              type="submit"
+            >
+              <span>Get started</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

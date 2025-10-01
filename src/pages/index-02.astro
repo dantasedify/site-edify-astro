@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero02 from "../components/ui/banner/Hero02.astro";
+import Brands02 from "../components/ui/common/Brands02.astro";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Feature02 from "../components/ui/Feature02.astro";
+import Testimonial02 from "../components/ui/Testimonial02.astro";
+import Service02 from "../components/ui/Service02.astro";
+import ExtendedService02 from "../components/ui/ExtendedService02.astro";
+import PricingSection from "../components/ui/PricingSection.astro";
+import Integration02 from "../components/ui/Integration02.astro";
+import Cta02 from "../components/ui/Cta02.astro";
+import { getCollection } from "astro:content";
+import { getEntryBySlug } from "astro:content";
+
+const prices = await getCollection("pricing");
+const titles = await getEntryBySlug("sectionTitlesTwo", "index");
+const features = await getCollection("featuresTwo");
+const testimonials = await getCollection("reviews");
+const service = await getEntryBySlug("serviceTwo", "service");
+const extendedService = await getEntryBySlug("serviceTwo", "extendedservice");
+const integrations = await getCollection("integrations");
+const hero = await getEntryBySlug("hero", "index02");
+---
+
+<Layout title="Homepage02">
+  <Hero02 data={hero?.data} title={titles?.data?.hero?.title} />
+  <Brands02 title={titles?.data?.brands?.title} />
+  <Feature02 title={titles?.data?.features?.title} data={features} />
+  <Testimonial02 data={testimonials} />
+  <Service02 title={titles?.data?.service?.title} data={service?.data} />
+  <ExtendedService02
+    title={titles?.data?.extendedService?.title}
+    data={extendedService?.data}
+  />
+  <PricingSection data={prices} title={titles?.data?.pricing?.title} />
+  <Integration02 data={integrations} title={titles?.data?.integration?.title} />
+  <Cta02 title={titles?.data?.action?.title} />
+</Layout>

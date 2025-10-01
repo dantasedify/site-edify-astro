@@ -1,0 +1,133 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const Members = await getCollection("team");
+  return Members.map(({ body, data, slug }) => {
+    return {
+      params: { slug },
+      props: { data, body },
+    };
+  });
+}
+const { data, body } = Astro.props;
+---
+
+<Layout title="Team Member">
+  <Breadcrumb page={"Team Details"} />
+  <div class="section zubuz-section-padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="zubuz-team-details-thumb">
+            <img
+              src={data?.image}
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="col-lg-7 d-flex align-items-center">
+          <div class="zubuz-default-content m-left-85">
+            <h2>{data?.position} of the company</h2>
+            <p>{body}</p>
+            <!-- <p>As the leader of the organization, he also sets the company's vision, mission, & values. He spent 15 years providing strategic direction and ensuring the organization's goals and objectives.</p> -->
+            <div class="zubuz-extara-mt">
+              <div class="zubuz-social-icon social-box">
+                <ul>
+                  {
+                    data.socialLinks.map((item: any) => {
+                      return (
+                        <>
+                          <li>
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              aria-label="social media links"
+                            >
+                              <i class="fab fa-twitter" />
+                            </a>
+                          </li>
+                        </>
+                      );
+                    })
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="zubuz-divider"></div>
+
+  <div class="section zubuz-section-padding">
+    <div class="container">
+      <div class="zubuz-section-title center w-large">
+        <h2>Past Experience of {data?.name}</h2>
+      </div>
+      <div class="zubuz-team-skill-wrap">
+        {
+          data.experience.map((item: any) => {
+            return (
+              <>
+                {" "}
+                <div class="zubuz-team-skill">
+                  <h3>{item?.position}</h3>
+                  <p>{item?.info}</p>
+                </div>
+              </>
+            );
+          })
+        }
+
+        <div class="zubuz-team-skill">
+          <h3>Knowledge</h3>
+          <ul>
+            {
+              data.knowledge.map((item: any) => {
+                return (
+                  <>
+                    <li>{item}</li>
+                  </>
+                );
+              })
+            }
+          </ul>
+        </div>
+
+        <div class="zubuz-team-skill">
+          <h3>Tools</h3>
+          <ul>
+            {
+              data.tools.map((item: any) => {
+                return (
+                  <>
+                    <li>{item}</li>
+                  </>
+                );
+              })
+            }
+          </ul>
+        </div>
+
+        <div class="zubuz-team-skill">
+          <h3>Skills</h3>
+          <ul>
+            {
+              data.skills.map((item: any) => {
+                return (
+                  <>
+                    <li>{item}</li>
+                  </>
+                );
+              })
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,37 @@
+---
+import ExtendedService03 from "../components/ui/ExtendedService03.astro";
+import Feature03 from "../components/ui/Feature03.astro";
+import Hero03 from "../components/ui/banner/Hero03.astro";
+import Stats03 from "../components/ui/Stats03.astro";
+import StatsNumbers from "../components/ui/StatsNumbers.astro";
+import Layout from "../layouts/Layout.astro";
+import PricingSection from "../components/ui/PricingSection.astro";
+import Testimonial03 from "../components/ui/Testimonial03.astro";
+import { getCollection } from "astro:content";
+import { getEntryBySlug } from "astro:content";
+import Faqs from "../components/ui/common/faqs.astro";
+
+const prices = await getCollection("pricing");
+const titles = await getEntryBySlug("sectionTitlesThree", "index");
+const hero = await getEntryBySlug("hero", "index03");
+const fetaures = await getCollection("featuresThree");
+const extendedFeature = await getEntryBySlug("extendedFeatures03", "index");
+const points = await getEntryBySlug("costEffectivePoints",'point-1');
+const statsData = await getEntryBySlug("costEffectivePoints", "index");
+
+---
+
+<Layout title="Homepage-3">
+  <Hero03 data={hero?.data} title={titles?.data?.hero?.title} />
+  <Feature03 title={titles?.data?.features?.title} data={fetaures} />
+  <ExtendedService03
+    data={extendedFeature?.data}
+    title={titles?.data?.extendedService?.title}
+  />
+  <Stats03 data={points} title={titles?.data?.stats?.title} />
+  <StatsNumbers data={statsData?.data?.stats} />
+  <PricingSection data={prices} title={titles?.data?.pricing?.title} />
+  <Testimonial03 />
+  <Faqs title={titles?.data?.faq?.title} />
+</Layout>;
+

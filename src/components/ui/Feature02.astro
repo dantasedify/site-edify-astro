@@ -1,0 +1,52 @@
+---
+const { title, data } = Astro.props;
+const middleIndex = Math.floor(data.length / 2);
+const firstHalf = data.slice(0, middleIndex);
+const secondHalf = data.slice(middleIndex);
+---
+
+<div class="section zubuz-section-padding3">
+  <div class="container">
+    <div class="zubuz-section-title center">
+      <h2>{title}</h2>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        {
+          firstHalf?.map((item) => (
+            <div class="zubuz-iconbox-wrap2">
+              <div class="zubuz-iconbox-icon">
+                <img src={item?.data?.icon} alt="" />
+              </div>
+              <div class="zubuz-iconbox-data">
+                <h3>{item?.data?.title}:</h3>
+                <p>{item?.data?.desc}</p>
+              </div>
+              <div class="zubuz-iconbox-thumb">
+                <img src={item?.data?.img} alt="feature card" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="col-lg-6">
+        {
+          secondHalf?.map((item) => (
+            <div class="zubuz-iconbox-wrap2">
+              <div class="zubuz-iconbox-icon">
+                <img src={item?.data?.icon} alt="" />
+              </div>
+              <div class="zubuz-iconbox-data">
+                <h3>{item?.data?.title}:</h3>
+                <p>{item?.data?.desc}</p>
+              </div>
+              <div class="zubuz-iconbox-thumb">
+                <img src={item?.data?.img} alt="feature card" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>

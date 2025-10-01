@@ -1,0 +1,24 @@
+---
+const { data } = Astro.props;
+---
+
+<div class="col-xl-4 col-md-6">
+  <div class="zubuz-iconbox-wrap center">
+    <div class="zubuz-iconbox-icon">
+      <img
+        src={data?.img}
+        alt="feature image"
+        width={32}
+        height={32}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="zubuz-iconbox-data">
+      <h3>{data?.title}</h3>
+      <p>
+        {data?.desc}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import { getCollection, getEntryBySlug } from "astro:content";
+const portfolio = await getCollection("portfolio");
+const titles = await getEntryBySlug("sectionTitles", "portfolio");
+---
+
+<Layout title="Portfolio">
+  <Breadcrumb page={"Portfolio"} />
+  <div class="section zubuz-section-padding3">
+    <div class="container">
+      <div class="zubuz-section-title center">
+        <h2>{titles?.data?.hero?.title}</h2>
+      </div>
+      <div class="zubuz-portfolio-menu">
+        <ul
+          id="watch-filter-gallery"
+          class="option-set clear-both"
+          data-option-key="filter"
+        >
+          <li class="tablink active" data-category="" style="margin-top: 6px;">All</li>
+          {
+            portfolio
+              .filter(
+                (item, index, self) =>
+                  self.findIndex(
+                    (t) => t.data.category === item.data.category
+                  ) === index
+              )
+              .slice(0, 4)
+              .map((item) => (
+                <li class="tablink" data-category={`${item?.data?.category}`} style="margin-top: 6px;">
+                  {item?.data?.category}
+                </li>
+              ))
+          }
+        </ul>
+      </div>
+      <div class="zubuz-portfolio-column" id="zubuz-two-column">
+        {
+          portfolio.map((item: any) => {
+            return (
+              <>
+                <div
+                  class={`project-card collection-grid-item zubuz-portfolio-wrap ${item?.data?.category}`}
+                >
+                  <div class="zubuz-portfolio-thumb">
+                    <img src={`${item?.data?.mainImg}`} alt="portfolio image" />
+                    <div class="zubuz-portfolio-data">
+                      <a href={`/portfolio/${item?.slug}`}>
+                        <h3>{item?.data?.portfolio}</h3>
+                      </a>
+                      <p>{item?.data?.category}</p>
+                      <a
+                        class="zubuz-portfolio-icon"
+                        href={`/portfolio/${item?.slug}`}
+                      >
+                        <img
+                          src="/assets/images/portfolio/arrow-right.svg"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  let tag = "";
+
+  function filterProjects() {
+    const allProjectCards = document.querySelectorAll(".project-card");
+    allProjectCards.forEach((projectCard) => {
+      if (tag === "" || projectCard.classList.contains(tag)) {
+        (projectCard as HTMLElement).style.display = "block";
+      } else {
+        (projectCard as HTMLElement).style.display = "none";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabLinks = document.querySelectorAll(".tablink");
+    tabLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        tabLinks.forEach((tablink) => {
+          (tablink as HTMLElement).style.backgroundColor = "transparent";
+          (tablink as HTMLElement).style.color = "black";
+          (tablink as HTMLElement).style.borderColor = "black";
+        });
+        tag = (event.target as HTMLElement)
+          .getAttribute("data-category")!
+          .replaceAll(" ", "-");
+
+        (link as HTMLElement).style.backgroundColor = "#0000ff";
+        (link as HTMLElement).style.color = "white";
+        filterProjects();
+      });
+    });
+  });
+</script>

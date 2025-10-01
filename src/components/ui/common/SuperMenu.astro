@@ -1,0 +1,17 @@
+---
+const { ele } = Astro.props;
+---
+
+<ul class="sub-menu shape-none" id="submenu-3">
+  {
+    ele?.superMenu?.map((el: any) => {
+      return (
+        <li class="sub-menu--item">
+          <a href={el?.url}>
+            <span class="menu-item-text">{el?.text}</span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

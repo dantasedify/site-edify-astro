@@ -1,0 +1,61 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="zubuz-hero-section">
+  <div class="container">
+    <div class="zubuz-hero-content center">
+      <h1>
+        {title}
+        <span class="zubuz-title-shape">
+          <img src="assets/images/v3/shape-v3-01.png" alt="" />
+        </span>
+      </h1>
+      <p>
+        {data?.desc}
+      </p>
+      <div class="zubuz-extara-mt">
+        <div class="zubuz-subscribe-three">
+          <form action="#">
+            <input type="email" placeholder="Enter your e-mail address" />
+            <button
+              class="zubuz-default-btn zubuz-subscription-btn three"
+              type="submit"
+            >
+              <span>Get started</span>
+            </button>
+            <div class="zubuz-input-email">
+              <img src="assets/images/icon/email2.svg" alt="" />
+            </div>
+          </form>
+        </div>
+        <div class="zubuz-icon-list">
+          <ul>
+            <li>
+              <img src="assets/images/v3/check.png" alt="" />
+              {data?.tag1}
+              <li>
+                <img src="assets/images/v3/check.png" alt="" />
+                {data?.tag2}
+              </li>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="zubuz-border-btoom">
+        <div class="zubuz-hero-thumb3">
+          <img src={data?.mainImg} alt="Thumbnail image" />
+          <div class="zubuz-hero-thumb-card1">
+            <img src={data?.otherImages[0]} alt="Feature images" />
+          </div>
+          <div class="zubuz-hero-thumb-card2">
+            <img src={data?.otherImages[0]} alt="Feature images" />
+          </div>
+          <div class="zubuz-hero-thumb-card3">
+            <img src={data?.otherImages[0]} alt="Feature images" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

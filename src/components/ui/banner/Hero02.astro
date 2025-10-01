@@ -1,0 +1,43 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="zubuz-hero-section2">
+  <div class="container">
+    <div class="row zubuz_screenfix_right">
+      <div class="col-lg-6">
+        <div class="zubuz-hero-content">
+          <div class="zubuz-hero-rating">
+            <ul>
+              <li><img src="/assets/images/v2/rating.png" alt="" /></li>
+              <li>{data?.reviewText}</li>
+            </ul>
+          </div>
+          <h1>{title}</h1>
+          <p>
+            {data?.desc}
+          </p>
+          <div class="zubuz-hero-btn-wrap">
+            <a class="zubuz-default-btn pill" href={data?.mainBtnLink}>
+              <span>{data?.mainBtnText}</span>
+            </a>
+            <a class="zubuz-login-btn m-0" href={data?.secondaryBtnLink}
+              >{data?.secondaryBtnText}</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="zubuz-hero-thumb2">
+          <img src={data?.img} alt="" />
+          <div class="zubuz-hero-shape2">
+            <img src="assets/images/v2/shape1-v2.png" alt="" />
+          </div>
+          <div class="zubuz-hero-shape3">
+            <img src="assets/images/v2/shape2-v2.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

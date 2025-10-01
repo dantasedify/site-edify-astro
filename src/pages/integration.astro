@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Breadcrumb from "../components/ui/common/breadcrumb.astro"
+import { getEntryBySlug } from "astro:content"
+import { getCollection } from "astro:content"
+const integrations=await getCollection('integrations')
+const title= await getEntryBySlug('sectionTitles','index')
+import Companies from "../components/ui/companies.astro"
+---
+
+<Layout title="Integration">
+    <Breadcrumb page={"Integrations"}/>
+    <Companies title={title?.data?.integration?.title} integrations={integrations}/>
+
+</Layout>
+

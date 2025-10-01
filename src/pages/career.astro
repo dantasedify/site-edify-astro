@@ -1,0 +1,94 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import { getEntryBySlug, getCollection } from "astro:content";
+import Contactus from "../components/ui/contactus.astro";
+import Stats03 from "../components/ui/Stats03.astro";
+import Title from "../components/ui/common/title.astro";
+
+const titles = await getEntryBySlug("sectionTitlesThree", "index");
+const title = await getEntryBySlug("sectionTitles", "index");
+const career = await getCollection("career");
+const benifits = await getCollection("benifits");
+const points= await getEntryBySlug('hiringPoints','process')
+const subtitles=await getEntryBySlug('subTitles','index')
+---
+
+<Layout title="Career">
+  <Breadcrumb page={"Career"} />
+  <div class="section zubuz-section-padding3">
+    <div class="container">
+      <div class="zubuz-section-title center">
+        <h2>{title?.data?.career?.title}</h2>
+      </div>
+      <div class="zubuz-jobs-wrap">
+        {
+          career.map((item: any) => {
+            return (
+              <>
+                <div class="zubuz-jobs-item">
+                  <div class="zubuz-jobs-item-content">
+                    <h3>{item?.data?.position}</h3>
+                    <p>{item?.data?.detail}</p>
+                  </div>
+                  <div class="zubuz-jobs-item-content">
+                    <span>{item?.data?.address}</span>
+                    <span>
+                      {item?.data?.jobType}, Salary: {item?.data?.salary}
+                    </span>
+                  </div>
+                  <div class="zubuz-jobs-item-content">
+                    <div class="zubuz-jobs-apply-btn">
+                      <a
+                        class="zubuz-default-btn"
+                        href={`/career/${item?.slug}`}
+                      >
+                        <span>Apply now</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <Stats03
+    data={points}
+    title={titles?.data?.stats?.title}
+  />
+
+  <div class="section zubuz-section-padding3">
+    <div class="container">
+      <Title
+        title={titles?.data?.career?.title}
+        text={subtitles?.data?.career?.title}
+      />
+      <div class="row">
+        {
+          benifits.map((item: any) => {
+            return (
+              <>
+                <div class="col-xl-4 col-md-6">
+                  <div class="zubuz-iconbox-wrap-left iconbox-left-border">
+                    <div class="zubuz-iconbox-icon none-bg">
+                      <img src="assets/images/team/icon1.png" alt="" />
+                    </div>
+                    <div class="zubuz-iconbox-data data-small">
+                      <span>{item?.data?.benifit}</span>
+                      <p>{item?.data?.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+  <Contactus title={title?.data?.question?.title} btn={"Contact Us"} />
+</Layout>

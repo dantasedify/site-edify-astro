@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Faqs from "../components/ui/common/faqs.astro";
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import Contactus from "../components/ui/contactus.astro";
+import { getEntryBySlug } from "astro:content";
+const titles = await getEntryBySlug("sectionTitles", "index");
+const title = await getEntryBySlug("sectionTitlesThree", "index");
+---
+
+<Layout title="Faqs">
+  <Breadcrumb page={"FAQ's"} />
+  <Faqs title={title?.data?.faq?.title} />
+  <Contactus title={titles?.data?.question?.title} btn={"Contact Us"} />
+</Layout>

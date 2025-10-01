@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import BlogsCard from "./common/BlogCard.astro";
+const { title } = Astro.props;
+const blogs = await getCollection("blogs");
+---
+
+<div class="section zubuz-section-padding3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="zubuz-section-title">
+          <h2>{title}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {
+        blogs?.map((blog) => {
+          return <BlogsCard blog={blog} />;
+        })
+      }
+    </div>
+  </div>
+</div>

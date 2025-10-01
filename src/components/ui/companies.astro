@@ -1,0 +1,48 @@
+---
+const { title, integrations } = Astro.props;
+---
+
+<div class="section zubuz-section-padding3">
+  <div class="container">
+    <div class="zubuz-section-title center w-large">
+      <h2>{title}</h2>
+    </div>
+    <div class="row">
+      {
+        integrations.map((company: any) => {
+          return (
+            <>
+              <div class="col-xl-4 col-md-6">
+                <div class="zubuz-iconbox-wrap-left d-block iconbox-left-border">
+                  <div class="zubuz-iconbox-header">
+                    <div class="zubuz-iconbox-icon">
+                      <img src={company?.data?.image} alt="" />
+                    </div>
+                    <div class="zubuz-iconbox-header-data">
+                      <h3 style="font-size: 24px; line-height: 28px; margin-bottom: 3px;">
+                        {company?.data?.company}
+                      </h3>
+                      <p>{company?.data?.work}</p>
+                    </div>
+                  </div>
+                  <div class="zubuz-iconbox-data">
+                    <p>{company?.data?.text}</p>
+                    <a
+                      class="zubuz-iconbox-btn"
+                      aria-label="read more"
+                      href="/"
+                    >
+                      {" "}
+                      <span>Read More</span>{" "}
+                      <img src="assets/images/icon/arrow-right2.svg" alt="" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        })
+      }
+    </div>
+  </div>
+</div>

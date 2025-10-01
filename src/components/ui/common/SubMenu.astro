@@ -1,0 +1,26 @@
+---
+import SuperMenu from "./SuperMenu.astro";
+
+const { item } = Astro.props;
+---
+
+<ul class="sub-menu" id="submenu-1">
+  {
+    item?.submenu?.map((ele: any) => {
+      return (
+        <li
+          class={`sub-menu--item ${
+            ele?.isSuperMenu ? "nav-item-has-children" : ""
+          }`}
+        >
+          <a href={ele?.url}>
+            <span class="menu-item-text">{ele?.text} </span>{ele?.isSuperMenu && <i class="fa fa-angle-down" />}
+          </a>
+          
+
+          {ele?.isSuperMenu && <SuperMenu ele={ele} />}
+        </li>
+      );
+    })
+  }
+</ul>

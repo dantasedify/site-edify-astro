@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+      --primary: #4219B5;
+      --secondary: #FFC20E;
+    }
+}
+
+.zubuz-default-btn.btn-primary {
+  background-color: #4219b5 !important;
+  position: relative;
+}
+
+.zubuz-default-btn.btn-primary:hover {
+  background-color: #00aa9e !important;
+  color: white !important;
+}
+
+.zubuz-default-btn.btn-primary:before,
+.zubuz-default-btn.btn-primary:after {
+  background-color: #4219b5 !important;
+}
+
+.zubuz-default-btn.btn-primary:hover:before,
+.zubuz-default-btn.btn-primary:hover:after {
+  background-color: #00aa9e !important;
+}
+
+.zubuz-default-btn.btn-primary span {
+  position: relative;
+  z-index: 10;
+  color: white !important;
+}
+
+.zubuz-default-btn.btn-primary:hover span {
+  color: white !important;
+}
+

@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import Slider02 from "../../functional/Slider02";
+const { title } = Astro.props;
+const brands = await getCollection("brands");
+---
+
+<div class="zubuz-brand-logo-section">
+  <div class="container">
+    <div class="zubuz-brand-logo-wrap">
+      <p>{title}</p>
+      <Slider02 data={brands[0]?.data?.brandsSlider3} client:only />
+    </div>
+  </div>
+</div>

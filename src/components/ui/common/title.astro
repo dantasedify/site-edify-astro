@@ -1,0 +1,24 @@
+---
+const { title, text, btn, customClass } = Astro.props;
+---
+
+<div class="zubuz-section-title zubuz-two-column-title">
+  <div class="row">
+    <div class="col-lg-7">
+      <h2 class={customClass}>{title}</h2>
+    </div>
+    <div class="col-lg-5 d-flex align-items-center">
+      {
+        btn ? (
+          <div class="zubuz-title-btn">
+            <a class="zubuz-default-btn pill" href="/integration">
+              <span>{btn}</span>
+            </a>
+          </div>
+        ) : (
+          <p>{text}</p>
+        )
+      }
+    </div>
+  </div>
+</div>

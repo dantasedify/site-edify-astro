@@ -1,0 +1,62 @@
+---
+const { page, customClass } = Astro.props;
+import Title from "../ui/common/title.astro";
+import { getEntryBySlug } from "astro:content";
+const titles = await getEntryBySlug("sectionTitles", "index");
+import { getCollection } from "astro:content";
+const members = await getCollection("team");
+---
+
+<div class={`section zubuz-section-padding3 ${customClass}`}>
+  <div class="container">
+    <Title
+      customClass={`${customClass ? "text-white" : ""}`}
+      title={titles?.data?.team?.title}
+      btn={"Join Our Team"}
+    />
+    <div class="row">
+      {
+        members
+          .slice(0, page === "team" ? members.length : 3)
+          .map((member: any) => {
+            return (
+              <>
+                <div class="col-xl-4 col-md-6">
+                  <div class="zubuz-team-wrap">
+                    <div class="zubuz-team-thumb">
+                      <img src={`${member?.data?.image}`} alt="" />
+                      <div class="zubuz-team-data">
+                        <a href={`team/${member.slug}`}>
+                          <h3>{member?.data?.name}</h3>
+                        </a>
+                        <p>{member?.data?.position}</p>
+                        <div class="zubuz-social-icon social-box small-box position">
+                          <ul>
+                            {member?.data?.socialLinks?.map((item: any) => {
+                              return (
+                                <>
+                                  <li>
+                                    <a
+                                      href={item?.link}
+                                      aria-label="social media links"
+                                      target="_blank"
+                                    >
+                                      <i class="fab fa-twitter" />
+                                    </a>
+                                  </li>
+                                </>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })
+      }
+    </div>
+  </div>
+</div>

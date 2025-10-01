@@ -1,0 +1,79 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import ShareLinks from "../../components/functional/ShareLinks";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const blogs = await getCollection("blogs");
+  return blogs.map((blog) => {
+    const { slug } = blog;
+    return {
+      params: { slug },
+      props: blog,
+    };
+  });
+}
+const { data, render } = Astro.props;
+const { Content } = await render();
+const {slug}=Astro.params
+---
+
+<Layout title="Blog Details">
+  <Breadcrumb page={"Blogs"} pagelink={"/blog/1"} detail={slug} />
+  <div class="section zubuz-section-padding2 post-details-page">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="single-post-content-wrap">
+            <div class="post-thumbnail">
+              <img src=`${data?.image1}` alt="Thumbnail Image" />
+            </div>
+            <div class="post-meta">
+              <div class="post-category">
+                {
+                  data?.categories?.map((item: any) => {
+                    return (
+                      <>
+                        <a href="#" style="margin-top: 7px;">{item}</a>
+                      </>
+                    );
+                  })
+                }
+              </div>
+              <div class="post-date">{data?.date}</div>
+            </div>
+            <h2 style="font-size: 30px; line-height: 1.4em;">
+              {data?.blog}
+            </h2>
+            <div class="entry-content">
+              <Content />
+              <div class="post-tag-wrap">
+                <div class="post-tag">
+                  <h3>Tags:</h3>
+                  <div class="wp-block-tag-cloud">
+                    {
+                      data?.tags?.map((tag: any) => {
+                        return (
+                          <>
+                            <a href="#">{tag}</a>
+                          </>
+                        );
+                      })
+                    }
+                  </div>
+                </div>
+                <div class="post-tag">
+                  <h3>Share:</h3>
+                  <div class="zubuz-social-icon social-box">
+                    <ShareLinks client:only />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

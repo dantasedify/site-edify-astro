@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEntryBySlug } from "astro:content";
+const title=await getEntryBySlug('sectionTitles','index')
+---
+
+<Layout title="404-Not Found">
+  <div class="section zubuz-extra-section">
+    <div class="container">
+      <div class="zubuz-errors-wrap">
+        <div class="zubuz-errors-thumb">
+          <img src="assets/images/about/404.png" alt="" />
+        </div>
+        <h2>{title?.data?.notFound?.title}</h2>
+        <div class="zubuz-extara-mt">
+          <a class="zubuz-default-btn" href="/"
+            ><span>Back To Home</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

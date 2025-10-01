@@ -1,0 +1,50 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="section zubuz-section-padding5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="zubuz-v3-thumb">
+          <img src={data?.thumbImg} alt="thubnail image" />
+          <div class="zubuz-v3-card">
+            <img src={data?.cardImg} alt="preview card image" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="zubuz-default-content m-left">
+          <h2>{title}</h2>
+          <p>
+            {data?.desc}
+          </p>
+          <div class="zubuz-extara-mt">
+            <div class="zubuz-iconbox-wrap-left mw-100">
+              <div class="zubuz-iconbox-icon none-bg">
+                <img src="assets/images/v3/icon11.png" alt="" />
+              </div>
+              <div class="zubuz-iconbox-data data-small">
+                <span>{data?.tagTitle1}:</span>
+                <p>
+                  {data?.tagDesc1}
+                </p>
+              </div>
+            </div>
+            <div class="zubuz-iconbox-wrap-left mw-100">
+              <div class="zubuz-iconbox-icon none-bg">
+                <img src="assets/images/v3/icon10.png" alt="" />
+              </div>
+              <div class="zubuz-iconbox-data data-small">
+                <span>{data?.tagTitle2}:</span>
+                <p>
+                  {data?.tagDesc2}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

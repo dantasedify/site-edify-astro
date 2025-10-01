@@ -1,0 +1,43 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="section zubuz-section-padding3">
+  <div class="container">
+    <div class="zubuz-section-title zubuz-two-column-title">
+      <div class="row">
+        <div class="col-lg-7">
+          <h2>{title}</h2>
+        </div>
+        <div class="col-lg-5 d-flex align-items-center">
+          <div class="zubuz-title-btn">
+            <a class="zubuz-default-btn pill" href="/services">
+              <span>View all services</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {
+        data?.map((card) => (
+          <div class="col-xl-4 col-md-6">
+            <div class="zubuz-iconbox-wrap-left iconbox-left-border">
+              <div class="zubuz-iconbox-icon none-bg">
+                <img src={card?.data?.img} alt="" />
+              </div>
+              <div class="zubuz-iconbox-data data-small">
+                <span>{card?.data?.featureName}</span>
+                <p>{card?.data?.desc}</p>
+                <a class="zubuz-iconbox-btn" href={`/service/${card?.slug}`}>
+                  <span>Read more</span>
+                  <img src="assets/images/icon/arrow-right2.svg" alt="" />
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

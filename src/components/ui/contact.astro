@@ -1,0 +1,43 @@
+---
+import { getEntryBySlug } from "astro:content";
+const info = await getEntryBySlug("agencyInfo", "info")
+const titles=await getEntryBySlug('sectionTitles','index')
+const subtitle=await getEntryBySlug('subTitles','index')
+---
+
+<div class="col-lg-6">
+    <div class="zubuz-default-content m-right">
+      <h2>{titles?.data?.contact?.title}</h2>
+      <p>
+        {subtitle?.data?.contact?.title}
+      </p>
+      <div class="zubuz-extara-mt">
+        <div class="zubuz-iconbox-wrap-left d-block">
+          <div class="zubuz-iconbox-data data-small">
+            <span>Office Location:</span> 
+            <a href={info?.data?.contact[2].link} style="color: black;">{info?.data?.contact[2].content}</a>
+          </div>
+        </div>
+        <div class="zubuz-iconbox-wrap-left d-block">
+          <div class="zubuz-iconbox-data data-small">
+            <span>Social Media:</span>
+            <div class="zubuz-social-icon social-box">
+              <ul>
+                    {
+                      info?.data?.socialMedia?.map((item: any) => (
+                        <li>
+                          <a href={item?.link} target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class=`bi bi-${item?.platform}` viewBox="0 0 16 16">
+                              <path d=`${item?.path}`/>
+                            </svg>
+                          </a>
+                        </li>
+                      ))
+                    }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

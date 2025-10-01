@@ -1,0 +1,75 @@
+---
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/ui/common/title.astro";
+import { getEntryBySlug } from "astro:content";
+const stats = await getEntryBySlug("stats", "stats");
+import ContentSection from "../components/ui/banner/content-section.astro";
+import FAQS from "../components/ui/common/faqs.astro";
+const content = await getEntryBySlug("information", "contentsection");
+const title = await getEntryBySlug("sectionTitlesThree", "index");
+import Teams from "../components/ui/team.astro";
+import Counter from "../components/functional/common/Counter";
+const about = await getEntryBySlug("about-us", "content");
+const titles = await getEntryBySlug("sectionTitles", "index");
+const subtitle = await getEntryBySlug("subTitles", "index");
+---
+
+<Layout title="About-Us">
+  <Breadcrumb page={"About Us"} />
+  <div class="section zubuz-section-padding3">
+    <div class="container">
+      <Title
+        title={titles?.data?.about?.title}
+        text={subtitle?.data?.about?.title}
+      />
+      <div class="row">
+        <div class="col-lg-4 col-md-4">
+          <div class="zubuz-about-thumb">
+            <img src={about?.data?.image1} alt="" />
+          </div>
+          <div class="zubuz-about-thumb">
+            <img src={about?.data?.image1} alt="" />
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="zubuz-about-thumb">
+            <img src={about?.data?.image3} alt="" />
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="zubuz-about-thumb">
+            <img src={about?.data?.image4} alt="" />
+          </div>
+          <div class="zubuz-about-thumb">
+            <img src={about?.data?.image5} alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section zubuz-section-padding5">
+    <div id="zubuz-counter"></div>
+    <div class="container">
+      <div class="zubuz-counter-wrap2">
+        {
+          stats.data.stats.map((item: any) => {
+            return (
+              <>
+                <Counter client:load data={item} />
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+  <ContentSection
+    heading={content.data.aboutSection.title}
+    text={content.data.aboutSection.text}
+    content={content.data.aboutSection.points}
+  />
+  <Teams customClass="dark-bg" page={"about"} />
+  <FAQS title={title?.data?.faq?.title} />
+</Layout>

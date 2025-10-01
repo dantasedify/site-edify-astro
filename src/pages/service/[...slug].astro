@@ -1,0 +1,100 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import Ratings from "../../components/ui/Ratings.astro";
+import { getCollection, getEntryBySlug } from "astro:content";
+import Integration02 from "../../components/ui/Integration02.astro";
+
+const titles = await getEntryBySlug("sectionTitles", "index");
+const title = await getEntryBySlug("sectionTitlesTwo", "index");
+const reviews = await getCollection("reviews");
+const integrations = await getCollection("integrations");
+const subtitles = await getEntryBySlug("subTitles", "index");
+
+export async function getStaticPaths() {
+  const Services = await getCollection("services");
+  return Services.map(({ body, data, slug }) => {
+    return {
+      params: { slug },
+      props: { data, body },
+    };
+  });
+}
+const { data } = Astro.props;
+---
+
+<Layout title="Service Details">
+  <Breadcrumb page={"Services"} pagelink={"/services"} detail={data?.service} />
+  <div class="section zubuz-section-padding">
+    <div class="container">
+      <div class="zubuz-section-title center">
+        <h2 class="rt-mb-20">{data.service}</h2>
+        <p>
+          {data.subtitle}
+        </p>
+      </div>
+      <div class="zubuz-video-wrap m-0">
+        <img src="/assets/images/service/video-bg.png" alt="" />
+        <a
+          class="video-init zubuz-review-video zubuz-video-service"
+          href={data?.videoLink}
+        >
+          <img
+            class="video-sevice"
+            src="/assets/images/service/play-btn.svg"
+            alt=""
+          />
+          <div class="waves waves-2 wave-1"></div>
+          <div class="waves waves-2 wave-2"></div>
+          <div class="waves waves-2 wave-3"></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="section zubuz-section-padding5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="zubuz-default-content m-right-50">
+            <h2>{title?.data?.services?.title}</h2>
+            {
+              subtitles?.data?.service?.map((item) => {
+                return (
+                  <>
+                    <p>{item}</p>
+                  </>
+                );
+              })
+            }
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="zubuz-default-content">
+            {
+              data?.features?.map((item: any) => {
+                return (
+                  <>
+                    <div class="zubuz-iconbox-wrap-left mw-100">
+                      <div class="zubuz-iconbox-icon none-bg">
+                        <img
+                          src={item?.svg}
+                          alt=""
+                        />
+                      </div>
+                      <div class="zubuz-iconbox-data data-small">
+                        <span>{item?.heading}</span>
+                        <p>{item.text}</p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Ratings title={titles?.data?.ratings?.title} data={reviews} />
+  <Integration02 data={integrations} title={title?.data?.integration?.title} />
+</Layout>

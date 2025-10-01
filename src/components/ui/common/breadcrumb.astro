@@ -1,0 +1,16 @@
+---
+const {page,detail,pagelink} = Astro.props;
+---
+
+<div class="zubuz-breadcrumb">
+  <div class="container">
+    <h1 class="post__title">{page}</h1>
+    <nav class="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li aria-current="page"><a href={pagelink}>{page}</a></li>
+        {detail && <li aria-current="page" style="text-transform: capitalize;">{detail}</li>}   
+      </ul>
+    </nav>
+  </div>
+</div>

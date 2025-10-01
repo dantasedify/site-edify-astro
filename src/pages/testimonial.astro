@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import { getEntryBySlug } from "astro:content";
+import Ratings from "../components/ui/Ratings.astro";
+const titles = await getEntryBySlug("sectionTitles", "index");
+import { getCollection } from "astro:content";
+const reviews = await getCollection("reviews");
+import Contactus from "../components/ui/contactus.astro";
+---
+
+<Layout title="Testimonial">
+  <Breadcrumb page={"Testimonial"} />
+  <Ratings title={titles?.data?.ratings?.title} data={reviews} />
+  <Contactus title={titles?.data?.question?.title}/>
+</Layout>

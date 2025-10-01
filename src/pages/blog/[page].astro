@@ -1,0 +1,211 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import Help from "../../components/ui/help.astro";
+import { getCollection } from "astro:content";
+const blogs = await getCollection("blogs");
+
+export async function getStaticPaths({ paginate }: { paginate: any }) {
+  const blogs = await getCollection("blogs");
+
+  return paginate(blogs, { pageSize: 2 });
+}
+
+const { page }: { page: any } = Astro.props;
+var blogCategories: any = [];
+blogs.map((blog) => {
+  blogCategories.push(...blog.data.categories);
+});
+const uniqueCategories = new Set(blogCategories);
+---
+
+<Layout title="Blogs">
+  <Breadcrumb page={"Our Blog"} Detail={""} />
+  <div class="section zubuz-section-padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          {
+            page?.data?.map((item: any) => {
+              return (
+                <>
+                  <div
+                    class={`single-post-item blog-card ${item?.data?.categories
+                      .map((item: any) => item.replaceAll(" ", "-"))
+                      .join(" ")}`}
+                  >
+                    <div class="post-thumbnail">
+                      <img src={`${item?.data?.image1}`} alt="" />
+                    </div>
+                    <div class="post-content">
+                      <div class="post-meta">
+                        <div class="post-category">
+                          {item?.data?.categories.map((category: any) => {
+                            return (
+                              <>
+                                <a href="#" style="margin-top: 7px;">{category}</a>
+                              </>
+                            );
+                          })}
+                        </div>
+                        <div class="post-date">{item?.data?.date}</div>
+                      </div>
+                      <a href={`/blog/${item?.slug}`}>
+                        <h2
+                          style="font-size: 30px; line-height: 1.4em;"
+                          class="entry-title"
+                        >
+                          {item?.data?.blog}
+                        </h2>
+                      </a>
+                      <a class="post-read-more" href={`/blog/${item?.slug}`}>
+                        <svg
+                          width="26"
+                          height="22"
+                          viewBox="0 0 26 22"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15.5 2.25L24.25 11M24.25 11L15.5 19.75M24.25 11L1.75 11"
+                            stroke="black"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </>
+              );
+            })
+          }
+
+          <div class="zubuz-navigation">
+            <nav class="navigation pagination" aria-label="Posts">
+              <div class="nav-links">
+                {
+                  page?.url?.prev ? (
+                    <a class="page-numbers" href={`${page?.url?.prev}`}>
+                      {" "}
+                      {"<"}{" "}
+                    </a>
+                  ) : (
+                    <span class="page-numbers" style="cursor: not-allowed;">
+                      {" "}
+                      {"<"}{" "}
+                    </span>
+                  )
+                }
+                {
+                  page?.url?.next ? (
+                    <a class="page-numbers" href={`${page?.url?.next}`}>
+                      {" "}
+                      {">"}{" "}
+                    </a>
+                  ) : (
+                    <span class="page-numbers" style="cursor: not-allowed;">
+                      {" "}
+                      {">"}{" "}
+                    </span>
+                  )
+                }
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="right-sidebar">
+            <div class="widget"></div>
+            <div class="widget">
+              <h3 class="wp-block-heading">Categories:</h3>
+              <ul>
+                {
+                  Array.from(uniqueCategories).map((tag: any) => (
+                    <li>
+                      <span
+                        class="bytagname"
+                        data-name={tag}
+                        style="cursor: pointer;"
+                        onmouseover="this.style.color='blue';"
+                        onmouseout="this.style.color='black';"
+                      >
+                        {tag}
+                      </span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div class="widget zubuz_recent_posts_Widget">
+              <h3 class="wp-block-heading">Recent Posts:</h3>
+              {
+                blogs.map((item: any) => {
+                  const words = item?.data?.blog.split(" ");
+                  const title = words.slice(0, 3).join(" ");
+                  return (
+                    <>
+                      <div class="post-item">
+                        <div class="post-thumb">
+                          <a  
+                            href={`/blog/${item.slug}`}
+                            aria-label="thumbnail image"
+                          >
+                            <img
+                              src={`${item?.data?.image1}`}
+                              alt="post preview image"
+                            />
+                          </a>
+                        </div>
+                        <div class="post-text">
+                          <div class="post-date">{item?.data?.date}</div>
+                          <a class="post-title" href={`/blog/${item.slug}`}>
+                            {title}...{" "}
+                          </a>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })
+              }
+            </div>
+            <Help />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  let tag: string = "";
+
+  function filterBlogs() {
+    const allNewsCards: NodeListOf<Element> =
+      document.querySelectorAll(".blog-card");
+
+    allNewsCards.forEach((newsCard) => {
+      const categoryMatch: boolean =
+        tag === "" || newsCard.classList.contains(tag);
+
+      if (categoryMatch) {
+        (newsCard as HTMLElement).style.display = "block";
+      } else {
+        (newsCard as HTMLElement).style.display = "none";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const tagLinks: NodeListOf<Element> =
+      document.querySelectorAll(".bytagname");
+    tagLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        tag = (event.target as HTMLElement).getAttribute("data-name") || "";
+        tag = tag.replaceAll(" ", "-");
+        filterBlogs();
+      });
+    });
+  });
+</script>

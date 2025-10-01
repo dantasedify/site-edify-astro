@@ -1,0 +1,34 @@
+---
+const { data } = Astro.props;
+---
+
+<div class="col-lg-6">
+  <div class="zubuz-testimonial-wrap">
+    <div class="zubuz-testimonial-rating">
+      <ul>
+        {
+          Array.from({ length: data?.rating }).map(() => (
+            <li>
+              <img src="/assets/images/icon/star-green.svg" alt="star" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="zubuz-testimonial-data">
+      <h3>{data?.title}</h3>
+      <p>
+        {data?.desc}
+      </p>
+    </div>
+    <div class="zubuz-testimonial-author">
+      <div class="zubuz-testimonial-author-thumb">
+        <img src={data?.user?.img} alt="" />
+      </div>
+      <div class="zubuz-testimonial-author-data">
+        <span>{data?.user?.name}</span>
+        <p>{data?.user?.occupation}</p>
+      </div>
+    </div>
+  </div>
+</div>

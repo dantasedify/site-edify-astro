@@ -1,0 +1,31 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="section zubuz-section-padding">
+  <div class="container">
+    <div class="zubuz-section-title zubuz-two-column-title">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2>{title}</h2>
+        </div>
+        <div class="col-lg-4 d-flex align-items-center">
+          <div class="zubuz-title-btn">
+            <a class="zubuz-default-btn pill" href="/integration">
+              <span>Browse all integrations</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="zubuz-tools-wrap">
+      {
+        data?.map((item) => (
+          <div class="zubuz-tools-item">
+            <img src={item?.data?.image} alt={item?.data?.company} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

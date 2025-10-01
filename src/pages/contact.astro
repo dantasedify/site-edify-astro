@@ -1,0 +1,45 @@
+---
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import Layout from "../layouts/Layout.astro";
+import Contactus from "../components/ui/contact.astro";
+import Form from "../components/functional/Form";
+import ContactType from "../components/ui/contact-type.astro";
+import Faqs from "../components/ui/common/faqs.astro";
+import { getEntryBySlug } from "astro:content";
+const info = await getEntryBySlug("agencyInfo", "info");
+const title = await getEntryBySlug("sectionTitlesThree", "index");
+---
+
+<Layout title="Contact">
+  <Breadcrumb page={"Contact Us"} />
+  <div class="section zubuz-section-padding2">
+    <div class="container">
+      <div class="row">
+        <Contactus />
+        <Form client:load />
+      </div>
+    </div>
+  </div>
+  <div class="section dark-bg zubuz-section-padding6">
+    <div class="container">
+      <div class="row">
+        {
+          info?.data?.contact?.map((item: any) => {
+            return (
+              <>
+                <ContactType
+                  image={item?.image}
+                  title={item?.title}
+                  content={item?.content}
+                  type={item?.type}
+                  link={item?.link}
+                />
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+  <Faqs title={title?.data?.faq?.title} />
+</Layout>

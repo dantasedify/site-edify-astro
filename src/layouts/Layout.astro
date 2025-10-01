@@ -1,0 +1,128 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+import { siteConfig } from "../config/index.js";
+import Header from "../components/ui/Header.astro";
+import Footer from "../components/ui/Footer.astro";
+import Loader from "../components/ui/Loader.astro";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/tailwind.css";
+import "../assets/css/app.css";
+import "../assets/css/main.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={siteConfig.metadata.meta_description} />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title ? title : siteConfig?.site?.title}</title>
+    <link
+      rel="shortcut icon"
+      href={siteConfig.site.favicon}
+      type="image/x-icon"
+    />
+    <link rel="icon" href={siteConfig.site.favicon} type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Raleway:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
+    />
+  </head>
+  <body class="light">
+    <Loader />
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<script>
+  // @ts-nocheck
+  const menu = document.querySelector(".menu-block");
+  const menuMain = menu.querySelector(".site-menu-main");
+  const submenuAll = menu.querySelectorAll(".sub-menu");
+  const goBack = menu.querySelector(".go-back");
+  const menuTrigger = document.querySelector(".mobile-menu-trigger");
+  const closeMenu = menu.querySelector(".mobile-menu-close");
+  let subMenu;
+  let subMenuArray = [];
+  let subMenuTextArray = [];
+
+  function last(array) {
+    return array[array.length - 1];
+  }
+  function last2(array) {
+    return array[array.length - 2];
+  }
+
+  menuMain.addEventListener("click", (e: any) => {
+    if (!menu.classList.contains("active")) {
+      return;
+    }
+    if (e.target?.closest(".nav-item-has-children")) {
+      const hasChildren = e.target.closest(".nav-item-has-children");
+
+      showSubMenu(hasChildren);
+    }
+  });
+  goBack.addEventListener("click", () => {
+    const lastItem = last(subMenuArray);
+    const lastItemText = last2(subMenuTextArray);
+    subMenuArray.pop();
+    subMenuTextArray.pop();
+    if (subMenuArray.length >= 0) {
+      document.getElementById(lastItem).style.animation =
+        "slideRight 0.5s ease forwards";
+      menu.querySelector(".current-menu-title").innerHTML = lastItemText;
+      setTimeout(() => {
+        document.getElementById(lastItem).classList.remove("active");
+      }, 300);
+    }
+    if (subMenuArray.length == 0) {
+      menu.querySelector(".mobile-menu-head").classList.remove("active");
+    }
+  });
+  menuTrigger.addEventListener("click", () => {
+    toggleMenu();
+  });
+  closeMenu.addEventListener("click", () => {
+    toggleMenu();
+  });
+  document.querySelector(".menu-overlay").addEventListener("click", () => {
+    toggleMenu();
+  });
+  function toggleMenu() {
+    menu.classList.toggle("active");
+    document.querySelector(".menu-overlay").classList.toggle("active");
+  }
+  function showSubMenu(hasChildren) {
+    for (let i = 0; submenuAll.length < i; i++) {
+      submenuAll[i].classList.remove("active");
+    }
+    subMenu = hasChildren.querySelector(".sub-menu");
+    subMenuArray.push(subMenu.id);
+    subMenu.classList.add("active");
+    subMenu.style.animation = "slideLeft 0.5s ease forwards";
+    const menuTitle = hasChildren.querySelector(".drop-trigger").textContent;
+    subMenuTextArray.push(menuTitle);
+
+    menu.querySelector(".current-menu-title").innerHTML = menuTitle;
+    menu.querySelector(".mobile-menu-head").classList.add("active");
+  }
+  window.onresize = function () {
+    if (this.innerWidth > 991) {
+      if (menu.classList.contains("active")) {
+        toggleMenu();
+      }
+    }
+  };
+</script>

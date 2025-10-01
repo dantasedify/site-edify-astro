@@ -1,0 +1,106 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const Portfolio = await getCollection("portfolio");
+  return Portfolio.map(({ body, data, slug }) => {
+    return {
+      params: { slug },
+      props: { data, body },
+    };
+  });
+}
+const { data } = Astro.props;
+---
+
+<Layout title="Portfolio-Details">
+  <Breadcrumb page={"Portfolio"} pagelink={"/portfolio"} detail={data?.portfolio}/>
+
+  <div class="section zubuz-section-padding">
+    <div class="container">
+      <div class="zubuz-section-title zubuz-two-column-title">
+        <div class="row">
+          <div class="col-lg-7">
+            <h2>{data?.portfolio}</h2>
+          </div>
+          <div class="col-lg-5 d-flex align-items-center">
+            <p>{data?.info}</p>
+          </div>
+        </div>
+      </div>
+      <div class="zubuz-portfolio-details-thumb">
+        <img src=`${data?.mainImg}` alt="" />
+      </div>
+      <div class="zubuz-portfolio-info">
+        <div class="zubuz-portfolio-info-item">
+          <p>Client</p>
+          <h3>{data?.client}</h3>
+        </div>
+        <div class="zubuz-portfolio-info-item">
+          <p>Services:</p>
+          <h3>{data?.service}</h3>
+        </div>
+        <div class="zubuz-portfolio-info-item">
+          <p>Duration:</p>
+          <h3>{data?.duration}</h3>
+        </div>
+        <div class="zubuz-portfolio-info-item">
+          <p>Website</p>
+          <a href=`${data?.website}`>
+            <h3>
+              Live preview <img
+                src="/assets/images/icon/arrow-right.svg"
+                alt=""
+              />
+            </h3>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="zubuz-portfolio-details-content-wrap">
+            <div class="zubuz-portfolio-details-content">
+              <h2>Project overview:</h2>
+              <p>{data?.overview}</p>
+            </div>
+            <div class="zubuz-portfolio-details-content">
+              <h2>Project execution:</h2>
+              <p>{data?.execution}</p>
+              <h4>
+                The {data?.steps?.length} Steps of the Website Design Process:
+              </h4>
+              <ul>
+                {
+                  data?.steps?.map((item: any,index) => {
+                    return (
+                      <>
+                        <li>Step {index+1}: {item}</li>
+                      </>
+                    );
+                  })
+                }
+              </ul>
+            </div>
+            <div class="zubuz-portfolio-details-content">
+              <h2>Project results:</h2>
+              <p>{data?.results}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="zubuz-portfolio-details-thumb-wrap">
+            {
+              data?.images?.map((image: any) => {return(<>
+                <div class="zubuz-portfolio-details-thumb-item">
+                  <img src=`${image}` alt="" />
+                </div></>)
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

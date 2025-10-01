@@ -1,0 +1,74 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumb from "../../components/ui/common/breadcrumb.astro";
+import { getCollection} from "astro:content";
+
+export async function getStaticPaths() {
+  const Career = await getCollection("career");
+  return Career.map(({ body, data, slug }) => {
+    return {
+      params: { slug },
+      props: { data, body },
+    };
+  });
+}
+const { data, body } = Astro.props;
+
+---
+
+<Layout title="Career Details">
+  <Breadcrumb page={"Career"} pagelink={"/career"} detail={data?.position}/>
+  <div class="section zubuz-section-padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="zubuz-career-details-content">
+            <h2>Job description:</h2>
+            <p>{body}</p>
+            <img src={`${data.image}`} alt="" />
+            <h3>Position requirements:</h3>
+          </div>
+          <div class="zubuz-position-requirement">
+            {
+              data?.requirements?.map((item: any, index: any) => {
+                return (
+                  <>
+                    <div class="zubuz-position-requirement-item">
+                      <span>
+                        {index + 1}. {item?.type}:
+                      </span>
+                      {item?.requirement?.map((point: any) => {
+                        return (
+                          <>
+                            <p>{point}</p>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </>
+                );
+              })
+            }
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="zubuz-job-role">
+            <h3>{data?.position}</h3>
+            <ul>
+              <li>
+                <img src="/assets/images/icon/map3.svg" alt="" />
+                {data?.address}
+              </li>
+              <li>
+                <img src="/assets/images/icon/briefcase.svg" alt="" />
+                {data?.jobType}
+                 Salary: {data?.salary}
+              </li>
+            </ul>
+            <a class="zubuz-default-btn" href="#"><span>Apply Now</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

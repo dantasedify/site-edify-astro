@@ -1,0 +1,47 @@
+---
+const { title, data } = Astro.props;
+---
+
+<div class="section zubuz-section-padding2">
+  <div id="zubuz-counter"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="zubuz-v2-thumb thumb-mr">
+          <img src={data?.img} alt="preview image" />
+          <div class="zubuz-v2-thumb-shape">
+            <img src="assets/images/v2/shape3-v2.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="zubuz-default-content">
+          <h2>{title}</h2>
+          <p>
+            {data?.desc}
+          </p>
+          <div class="zubuz-extara-mt">
+            <div class="zubuz-counter-wrap">
+              <div class="zubuz-counter-data">
+                <h2 class="zubuz-counter-number">
+                  <span data-percentage="99" class="zubuz-counter"
+                    >{data?.stats?.value1}</span
+                  >%
+                </h2>
+                <p>{data?.stats?.key1}</p>
+              </div>
+              <div class="zubuz-counter-data">
+                <h2 class="zubuz-counter-number">
+                  <span data-percentage="3.5" class="zubuz-counter"
+                    >{data?.stats?.value2}</span
+                  >X
+                </h2>
+                <p>{data?.stats?.key2}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

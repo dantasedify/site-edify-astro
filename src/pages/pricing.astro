@@ -1,0 +1,241 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PricingSection from "../components/ui/PricingSection.astro";
+import Breadcrumb from "../components/ui/common/breadcrumb.astro";
+import { getCollection, getEntryBySlug } from "astro:content";
+import Title from "../components/ui/common/title.astro";
+const prices = await getCollection("pricing");
+const titles = await getEntryBySlug("sectionTitlesThree", "index");
+const features = await getCollection("pricingFeature");
+---
+
+<Layout title="Pricing">
+  <Breadcrumb page={"Our Pricing Plan"} />
+  <PricingSection data={prices} title={titles?.data?.pricing?.title} />
+
+  <div class="section zubuz-section-padding3">
+    <div class="container">
+      <Title
+        title={titles?.data?.features?.title}
+        text={"Discovered our all customized services and you can double, triple, or quadruple your income & beat your competition with professional services!"}
+      />
+
+      <div class="zubuz-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature Name:</th>
+              <th>Starter</th>
+              <th>Business</th>
+              <th>Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Users</td>
+              <td>{features[2]?.data?.users}</td>
+              <td>{features[0]?.data?.users}</td>
+              <td>{features[1]?.data?.users}</td>
+            </tr>
+            <tr>
+              <td>File storage</td>
+              <td>{features[2]?.data?.storage}</td>
+              <td>{features[0]?.data?.storage}</td>
+              <td>{features[1]?.data?.storage}</td>
+            </tr>
+            <tr>
+              <td>Premium supports</td>
+              <td
+                >{
+                  features[2]?.data?.supports ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[0]?.data?.supports ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[1]?.data?.supports ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+            </tr>
+            <tr>
+              <td>Secure transfer</td>
+              <td
+                >{
+                  features[2]?.data?.secure ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[0]?.data?.secure ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[1]?.data?.secure ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+            </tr>
+            <tr>
+              <td>Statistics and tracking</td>
+              <td
+                >{
+                  features[2]?.data?.statistics ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[0]?.data?.statistics ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[1]?.data?.statistics ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+            </tr>
+            <tr>
+              <td>File size limit</td>
+              <td>{features[2]?.data?.fileSizeLimit}</td>
+              <td>{features[0]?.data?.fileSizeLimit}</td>
+              <td>{features[1]?.data?.fileSizeLimit}</td>
+            </tr>
+            <tr>
+              <td>Mobile app</td>
+              <td
+                >{
+                  features[2]?.data?.mobileApp ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[0]?.data?.mobileApp ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+              <td
+                >{
+                  features[1]?.data?.mobileApp ? (
+                    <>
+                      <img src="assets/images/icon/check.svg" alt="" />
+                    </>
+                  ) : (
+                    <>
+                      <img src="assets/images/icon/minus.svg" alt="" />
+                    </>
+                  )
+                }</td
+              >
+            </tr>
+            <tr>  
+              <td></td>
+              {
+                features.map((item) => {
+                  return (
+                    <>
+                      <td>
+                        <a class="zubuz-default-btn" href="/contact">
+                          <span>Get Started Now</span>
+                        </a>
+                      </td>
+                    </>
+                  );
+                })
+              }
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</Layout>

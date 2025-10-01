@@ -1,0 +1,40 @@
+---
+const { blog } = Astro.props;
+---
+
+<div class="col-xl-4 col-lg-6">
+  <div class="zubuz-blog-wrap">
+    <a href=`/blog/${blog?.slug}`>
+      <div class="zubuz-blog-thumb">
+        <img src={`${blog?.data?.image1}`} alt="" />
+      </div>
+    </a>
+    <div class="zubuz-blog-data">
+      <p>{blog?.data?.date}</p>
+
+      <a href=`/blog/${blog?.slug}`>
+        <h3 class="text-truncate">{blog?.data?.blog}</h3>
+      </a>
+      <a
+        class="zubuz-blog-btn"
+        aria-label="Go to blog detail"
+        href=`/blog/${blog?.slug}`
+      >
+        <svg
+          width="26"
+          height="22"
+          viewBox="0 0 26 22"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15.5 2.25L24.25 11M24.25 11L15.5 19.75M24.25 11L1.75 11"
+            stroke="black"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>

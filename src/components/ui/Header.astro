@@ -1,0 +1,314 @@
+---
+import { menu } from "../../config/index";
+import SubMenu from "./common/SubMenu.astro";
+const url = Astro.url.pathname;
+import { getEntryBySlug } from "astro:content";
+
+let info;
+try {
+  info = await getEntryBySlug("agencyInfo", "info");
+} catch (error) {
+  console.warn("agencyInfo collection not found, using fallback");
+  info = null;
+}
+
+const isHomePage =
+  url === "/" ||
+  url === "" ||
+  url === "/index-02/" ||
+  url === "/index-03/" ||
+  url === "/index-02" ||
+  url === "/index-03" ||
+  url === "/notfound-404" ||
+  url === "/notfound-404/"
+    ? true
+    : false;
+---
+
+<header
+  class="site-header site-header--menu-left zubuz-header-section"
+  id="sticky-menu"
+>
+  <div class="container">
+    <nav class="navbar site-navbar">
+      <!-- Brand Logo-->
+      <div class="brand-logo">
+        <a aria-label="logo" href="/">
+          <img
+            src={`${isHomePage ? info?.data?.lightLogo || "/assets/images/logo/logo_edify.svg" : info?.data?.darkLogo || "/assets/images/logo/logo_edify.svg"}`}
+            alt="logo"
+            class="light-version-logo"
+          />
+        </a>
+      </div>
+      <div class="menu-block-wrapper">
+        <div class="menu-overlay"></div>
+        <nav class="menu-block" id="append-menu-header">
+          <div class="mobile-menu-head">
+            <div class="go-back">
+              <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="current-menu-title"></div>
+            <div class="mobile-menu-close">&times;</div>
+          </div>
+          <ul class="site-menu-main">
+            {
+              menu?.map((item) => {
+                return (
+                  <li
+                    class={`nav-item ${
+                      item?.isSubMenu ? "nav-item-has-children" : ""
+                    }`}
+                  >
+                    <a
+                      href={item?.url}
+                      class={`nav-link-item drop-trigger ${
+                        isHomePage ? "text-black" : "text-white"
+                      }  nav-link`}
+                    >
+                      {item?.text}{" "}
+                      {item?.isSubMenu && <i class="fa fa-angle-down" />}
+                    </a>
+                    {item?.isSubMenu && <SubMenu item={item} />}
+                  </li>
+                );
+              })
+            }
+            {/* CTA buttons inside mobile menu */}
+            <li class="nav-item">
+              <div class="mobile-menu-cta !tw-pl-0">
+                <a
+                  class="zubuz-default-btn zubuz-header-btn btn-primary !tw-bg-primary tw-text-white"
+                  href="/contact"
+                >
+                  <span>Seja nosso parceiro</span>
+                </a>
+                <a
+                  class="zubuz-default-btn !tw-bg-secondary !tw-text-black platform-btn !tw-py-3"
+                  href="/contact"
+                >
+                  <span>Portal para a escola</span>
+                </a>
+                <a
+                  class="zubuz-default-btn !tw-bg-secondary !tw-text-black platform-btn !tw-py-3"
+                  href="/contact"
+                >
+                  <span>Plataforma para o aluno</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="header-btn header-btn-l1 ms-auto d-none d-xs-inline-flex">
+        <a
+          class="zubuz-default-btn zubuz-header-btn btn-primary !tw-bg-primary tw-text-white tw-mr-3"
+          href="/contact"
+        >
+          <span>Seja nosso <br /> parceiro</span>
+        </a>
+        <div class="platform-group">
+          <a
+            class="zubuz-default-btn !tw-bg-secondary !tw-text-black platform-btn"
+            href="/contact"
+          >
+            <span>Portal para a escola</span>
+          </a>
+          <a
+            class="zubuz-default-btn !tw-bg-secondary !tw-text-black platform-btn"
+            href="/contact"
+          >
+            <span>Plataforma para o aluno</span>
+          </a>
+        </div>
+      </div>
+      <!-- mobile menu trigger -->
+      <div class="mobile-menu-trigger light">
+        <span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const logo = document.querySelector(".light-version-logo");
+  const navLinks = Array.from(
+    document.querySelectorAll(".nav-link-item")
+  ) as HTMLElement[];
+
+  // Guardar estado inicial dos links para restaurar quando sair do sticky
+  navLinks.forEach((ele) => {
+    const initialIsWhite = ele.classList.contains("text-white");
+    ele.dataset.initialColor = initialIsWhite ? "white" : "black";
+  });
+
+  window.addEventListener("scroll", function () {
+    const stickyMenu = document.getElementById("sticky-menu");
+    if (!stickyMenu) return;
+
+    if (window.pageYOffset > 50) {
+      stickyMenu.classList.add("sticky-menu");
+
+      // Em modo sticky: usar links pretos
+      navLinks.forEach((ele) => {
+        ele.classList.remove("text-white");
+        ele.classList.add("text-black");
+      });
+    } else {
+      stickyMenu.classList.remove("sticky-menu");
+
+      // Fora do sticky: restaurar cores originais dos links
+      navLinks.forEach((ele) => {
+        ele.classList.remove("text-white");
+        ele.classList.remove("text-black");
+        const initialColor = ele.dataset.initialColor;
+        if (initialColor === "white") {
+          ele.classList.add("text-white");
+        } else {
+          ele.classList.add("text-black");
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .header-btn .platform-btn {
+    height: initial !important;
+    align-self: center;
+    padding: 5px 10px;
+  }
+
+  /* Empilhar apenas os botões de plataforma */
+  .header-btn.header-btn-l1 .platform-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .header-btn.header-btn-l1 .platform-group .zubuz-default-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Garantir que o logo SVG seja exibido corretamente */
+  .brand-logo img {
+    max-height: 50px;
+    width: auto;
+    display: block;
+  }
+
+  /* CTAs dentro do menu mobile */
+  .mobile-menu-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .mobile-menu-cta .zubuz-default-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Esconder CTAs do menu quando em telas grandes (menu desktop) */
+  @media (min-width: 1200px) {
+    .mobile-menu-cta {
+      display: none !important;
+    }
+  }
+
+  /* Esconder botões de desktop quando o botão do menu mobile estiver visível */
+  @media (max-width: 1199px) {
+    .header-btn.header-btn-l1 {
+      display: none !important;
+    }
+  }
+
+  /* Estender comportamento do menu mobile até 1200px */
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .site-header .mobile-menu-trigger {
+      display: flex;
+      height: 32px;
+      width: 32px;
+      margin-left: 40px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 2px;
+    }
+    .site-header .mobile-menu-trigger span {
+      display: block;
+      height: 2px;
+      background-color: var(--heading-color);
+      width: 24px;
+      position: relative;
+    }
+    .site-header .mobile-menu-trigger span:before,
+    .site-header .mobile-menu-trigger span:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--heading-color);
+    }
+    .site-header .mobile-menu-trigger span:before { top: -8px; }
+    .site-header .mobile-menu-trigger span:after { top: 8px; }
+
+    .site-header .menu-block {
+      position: fixed;
+      width: 320px;
+      background-color: #ffffff;
+      left: 0;
+      top: 0;
+      height: 100%;
+      overflow: hidden;
+      transform: translate(-100%);
+      transition: all 0.5s ease;
+      z-index: 1099;
+    }
+    .site-header .menu-block.active { transform: translate(0%); }
+
+    .site-header .menu-block .mobile-menu-head {
+      display: flex;
+      height: 50px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      background-color: #ffffff;
+      top: 0;
+      z-index: 501;
+    }
+    .site-header .menu-block .site-menu-main {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .menu-overlay {
+      position: fixed;
+      background-color: rgba(0, 0, 0, 0.5);
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1098;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    .menu-overlay.active { visibility: visible; opacity: 1; }
+    .site-menu-main > li { display: block; }
+    .site-menu-main > li > a {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 50px 0 15px;
+      display: block;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+</style>
+

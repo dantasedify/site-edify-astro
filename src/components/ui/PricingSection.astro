@@ -1,0 +1,59 @@
+---
+import PricingCard from "./common/PricingCard.astro";
+const { data, title } = Astro.props;
+---
+
+<div class="section zubuz-section-padding3">
+  <div class="container">
+    <div class="zubuz-section-title center">
+      <h2>{title}</h2>
+    </div>
+    <div class="pricing-btn">
+      <div class="toggle-btn">
+        <label>Monthly</label>
+        <input
+          class="form-check-input btn-toggle price-deck-trigger"
+          type="checkbox"
+          id="flexSwitchCheckDefault"
+          data-pricing-trigger
+          data-target="#table-price-value"
+          checked
+        />
+        <label>Annually</label>
+      </div>
+    </div>
+    <div
+      class="row zubuz-pricing-four-column"
+      id="table-price-value"
+      data-pricing-dynamic
+      data-value-active="monthly"
+    >
+      {data?.map((card) => <PricingCard {...card} />)}
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkbox = document.querySelector(".price-deck-trigger");
+    const dynamicValues = document.querySelectorAll(".dynamic-value");
+    const zubuzPrices = document.querySelectorAll(".zubuz-price");
+
+    checkbox.addEventListener("change", function () {
+      const newValue = this.checked ? "/Monthly" : "/Annually";
+      const monthlyPrices = Array.from(zubuzPrices).map((el) =>
+        el.getAttribute("data-monthly")
+      );
+      const yearlyPrices = Array.from(zubuzPrices).map((el) =>
+        el.getAttribute("data-yearly")
+      );
+      const newPrices = this.checked ? monthlyPrices : yearlyPrices;
+      dynamicValues.forEach(function (element) {
+        element.textContent = newValue;
+      });
+      zubuzPrices.forEach(function (priceElement, index) {
+        const price = newPrices[index];
+        priceElement.textContent = price;
+      }, this);
+    });
+  });
+</script>
