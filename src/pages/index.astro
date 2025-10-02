@@ -8,6 +8,7 @@ import BrandChoice from "../components/ui/brand-choice.astro";
 import ExtendedFeature from "../components/ui/ExtendedFeature.astro";
 import Title from "../components/ui/common/title.astro";
 import Service from "../components/ui/service.astro";
+import Finance from "../components/ui/finance.astro";
 
 const hero = (await getEntryBySlug("hero", "index")) as any;
 const title = hero?.data?.title;
@@ -39,5 +40,6 @@ const servicesCollection = await getCollection("services");
     </div>
   </div>
 
+  <Finance title={titles?.data?.service?.title} />
 </Layout>
 
