@@ -9,6 +9,8 @@ import ExtendedFeature from "../components/ui/ExtendedFeature.astro";
 import Title from "../components/ui/common/title.astro";
 import Service from "../components/ui/service.astro";
 import Finance from "../components/ui/finance.astro";
+import Counter from "../components/functional/common/Counter";
+
 
 const hero = (await getEntryBySlug("hero", "index")) as any;
 const title = hero?.data?.title;
@@ -16,6 +18,7 @@ const brands = (await getEntryBySlug("brands", "index")) as any;
 const titles = (await getEntryBySlug("sectionTitlesTwo", "index")) as any;
 const extendedFeatures = await getCollection("extendedFeatures");
 const servicesCollection = await getCollection("services");
+const stats = await getEntryBySlug("stats", "stats");
 ---
 
 <Layout title="Edify - Seus alunos falando inglês de verdade.">
@@ -41,5 +44,23 @@ const servicesCollection = await getCollection("services");
   </div>
 
   <Finance title={titles?.data?.service?.title} />
+
+  <div class="section zubuz-section-padding5">
+    <div id="zubuz-counter"></div>
+    <div class="container">
+      <div class="zubuz-counter-wrap2">
+        {
+          stats.data.stats.map((item: any) => {
+            return (
+              <>
+                <Counter client:load data={item} />
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
 </Layout>
 
