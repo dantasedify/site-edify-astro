@@ -12,6 +12,8 @@ import Finance from "../components/ui/finance.astro";
 import Counter from "../components/functional/common/Counter";
 import Contactus from "../components/ui/contactus.astro";
 import Ratings from "../components/ui/Ratings.astro";
+import EdifyMidia from "../components/ui/EdifyMidia.astro";
+import Action from "../components/ui/Action.astro";
 
 const hero = (await getEntryBySlug("hero", "index")) as any;
 const title = hero?.data?.title;
@@ -75,6 +77,8 @@ const edifyMidia = (await getEntryBySlug("edifyNaMidia", "index")) as any;
     content={edifyMidia?.data?.content}
     logos={edifyMidia?.data?.logos}
   />
+
+  <Action title={titles?.data?.action?.title} />
 
 </Layout>
 
