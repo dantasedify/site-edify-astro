@@ -22,6 +22,7 @@ const extendedFeatures = await getCollection("extendedFeatures");
 const servicesCollection = await getCollection("services");
 const stats = await getEntryBySlug("stats", "stats");
 const reviews = await getCollection("reviews");
+const edifyMidia = (await getEntryBySlug("edifyNaMidia", "index")) as any;
 ---
 
 <Layout title="Edify - Seus alunos falando inglês de verdade.">
@@ -68,6 +69,12 @@ const reviews = await getCollection("reviews");
   <Contactus title={sectionTitles?.data?.question?.title} btn={"Calcule agora"} subtitle={"Use a nossa calculadora e descubra o seu lucro com uma de nossas soluções."} />
 
   <Ratings title={titles?.data?.ratings?.title} data={reviews} />
+
+  <EdifyMidia 
+    title={edifyMidia?.data?.title} 
+    content={edifyMidia?.data?.content}
+    logos={edifyMidia?.data?.logos}
+  />
 
 </Layout>
 

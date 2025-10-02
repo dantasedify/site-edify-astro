@@ -10,6 +10,7 @@ export default {
       colors: {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
+        "soft-gray": "#F2F2F2",
       },
     },
   },
