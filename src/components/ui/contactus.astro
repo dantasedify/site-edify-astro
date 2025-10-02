@@ -1,5 +1,5 @@
 ---
-const {title,btn}=Astro.props
+const {title, subtitle, btn}=Astro.props
 ---
 
 <div class="section zubuz-section-padding dark-bg">
@@ -7,13 +7,14 @@ const {title,btn}=Astro.props
     <div class="row">
       <div class="col-lg-6">
         <div class="zubuz-default-content cta light">
-          <h2>{title}</h2>
+          <h2 class="!tw-text-5xl">{title}</h2>
+          <p class="mt-3">{subtitle}</p>
         </div>
       </div>
-      <div class="col-lg-6 d-flex align-items-center">
-        <div class="zubuz-title-btn">
+      <div class="col-lg-6 d-flex align-items-center justify-content-center">
+        <div class="zubuz-title-btn !tw-text-center">
           <a class="zubuz-default-btn" href="/contact">
-            <span>Contact Us</span>
+            <span>{btn}</span>
           </a>
         </div>
       </div>
