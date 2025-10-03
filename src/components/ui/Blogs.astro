@@ -6,14 +6,30 @@ const blogs = await getCollection("blogs");
 ---
 
 <div class="section zubuz-section-padding3">
+
   <div class="container">
+
     <div class="row">
+
       <div class="col-lg-8">
+
         <div class="zubuz-section-title">
           <h2>{title}</h2>
+          <p class="mt-4">Se informe com quem é referência em bilíngue no Brasil!</p>
+        </div>
+        
+      </div>
+
+      <div class="col-lg-4">
+        <div class="zubuz-title-btn">
+          <a class="zubuz-default-btn" href="/blog">
+            <span>Ver o blog completo!</span>
+          </a>
         </div>
       </div>
+
     </div>
+
     <div class="row">
       {
         blogs?.map((blog) => {
@@ -21,5 +37,7 @@ const blogs = await getCollection("blogs");
         })
       }
     </div>
+
   </div>
+
 </div>
